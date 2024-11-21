@@ -176,8 +176,13 @@ def send_money_web():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     json_string = request.get_data().decode('UTF-8')
-    update = telebot.types.Update.de_json(json_string)
-    SENDIT_BOT.process_new_updates([update])
+    logging.info(f"Received webhook update: {json_string}")
+    try:
+        update = telebot.types.Update.de_json(json_string)
+        logging.info("Processing update with telebot.")
+        SENDIT_BOT.process_new_updates([update])
+    except Exception as e:
+        logging.error(f"Error processing update: {e}")
     return '!', 200
     
 ### Step 4.4: Main Application Entry Point
