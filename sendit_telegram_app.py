@@ -181,6 +181,7 @@ def webhook():
         update = telebot.types.Update.de_json(json_string)
         logging.info("Processing update with telebot.")
         SENDIT_BOT.process_new_updates([update])
+        logging.info("Update processed successfully.")
     except Exception as e:
         logging.error(f"Error processing update: {e}")
     return '!', 200
@@ -188,4 +189,5 @@ def webhook():
 ### Step 4.4: Main Application Entry Point
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=FLASK_PORT)
+    port = int(os.environ.get('PORT', FLASK_PORT))  # Use Render's assigned port or fallback to default
+    app.run(host="0.0.0.0", port=port)
