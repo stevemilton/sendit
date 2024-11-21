@@ -172,6 +172,14 @@ def send_money_web():
         flash(f"An error occurred: {str(e)}", "error")
     return redirect(url_for("index"))
 
+# Define the /webhook route
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    json_string = request.get_data().decode('UTF-8')
+    update = telebot.types.Update.de_json(json_string)
+    SENDIT_BOT.process_new_updates([update])
+    return '!', 200
+    
 ### Step 4.4: Main Application Entry Point
 
 if __name__ == "__main__":
