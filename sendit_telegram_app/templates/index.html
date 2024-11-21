@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SendIt App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Welcome to SendIt!</h2>
+        <form action="/balance" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="username">Check Balance</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter your Telegram username">
+            </div>
+            <button type="submit" class="btn btn-primary">Check Balance</button>
+        </form>
+
+        <form action="/send_money" method="POST" class="mt-4">
+            <h3>Send Money</h3>
+            
+            <div class="form-group">
+                <label for="receiver">Receiver Username</label>
+                <input type="text" name="receiver" class="form-control" placeholder="Enter receiver's Telegram username">
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="text" name="amount" class="form-control" placeholder="Enter amount to send">
+            </div>
+            <button type="submit" class="btn btn-success">SendIt!</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="mt-4">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-2">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
