@@ -74,10 +74,12 @@ def update_balance(username, amount):
 
 @SENDIT_BOT.message_handler(commands=["start"])
 def send_welcome(message):
-    SENDIT_BOT.reply_to(
-        message,
-        "Welcome to SendIt! You can send money to other Telegram users using their username! Please verify your identity by using the /verify command."
-    )
+    try:
+        response_message = "Welcome to SendIt! You can send money to other Telegram users using their username! Please verify your identity by using the /verify command."
+        SENDIT_BOT.reply_to(message, response_message)
+        logging.info(f"Successfully sent welcome message to user @{message.from_user.username}")
+    except Exception as e:
+        logging.error(f"Error sending welcome message to @{message.from_user.username}: {e}")
 
 @SENDIT_BOT.message_handler(commands=["verify"])
 def send_verification(message):
